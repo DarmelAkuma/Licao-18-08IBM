@@ -6,11 +6,10 @@ namespace Licao18_08 {
         static void Main(string[] args) {
 
             for (int i = 0; i < 3; i++) {
-                Conta IR = new Conta();
-                Console.WriteLine("Digite o salário:");
-                IR.salario = decimal.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                IR.ImpostoRenda();
-                IR.Saida();
+                Console.Write("Digite o salário: ");
+                var salario = decimal.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Conta resultado = new Conta (salario);
+                Console.WriteLine(resultado);
             }
         }
     }
