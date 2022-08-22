@@ -5,35 +5,34 @@ using System.Text;
 
 namespace Licao18_08 {
     class Conta {
+        public decimal salario;
+        public decimal porcentagem;
+        public void ImpostoRenda() {
 
-        public double Salario { get; private set; }
+            var primeiraRenda = new[] { 0, 2000 };
+            decimal[] segundaRenda = new decimal[] { 2000.01m, 3000 };
+            decimal[] terceiraRenda = new decimal[] { 3000.01m, 4500 };
 
-        public Conta(double salario) {
-            Salario = salario;
-        }
-        public double ImpostoRenda() {
-            double[] primeiraRenda = new double[] { 0, 2000 };
-            double[] segundaRenda = new double[] { 2000.01, 3000 };
-            double[] terceiraRenda = new double[] { 3000.01, 4500 };
-
-            if (Salario > primeiraRenda[0] && Salario <= primeiraRenda[1]) {
-                return 0;
+            if (salario < primeiraRenda[1]) {
+                porcentagem = 0;
             }
-            else if (Salario >= segundaRenda[0] && Salario <= segundaRenda[1]) {
-                return (Salario - 2000) * 0.08;
+            else if (salario < segundaRenda[1]) {
+                porcentagem = (salario - primeiraRenda[1]) * 0.08m;
             }
-            else if (Salario >= terceiraRenda[0] && Salario <= terceiraRenda[1]) {
-                return (Salario - 3000) * 0.18 + 1000 * 0.08;
+            else if (salario < terceiraRenda[1]) {
+                porcentagem = (salario - segundaRenda[1]) * 0.18m + (1000 * 0.08m);
             }
-            else {
-                return (Salario - 4500) * 0.28 + 1000 * 0.08 + 1500 * 0.18;
+            else if (salario > terceiraRenda[1]) {
+                porcentagem = (salario - terceiraRenda[1]) * 0.28m + (1500 * 0.18m) + (1000 * 0.08m);
             }
         }
-        public override string ToString() {
-
-            var portecentagem = ImpostoRenda();
-
-            return portecentagem == 0 ? "Isento" : "R$ " + portecentagem.ToString("F2", CultureInfo.InvariantCulture);
+        public void Saida() {
+            if (porcentagem >= 0) {
+                Console.WriteLine("R$ " + porcentagem.ToString("F2", CultureInfo.InvariantCulture));
+            }
+            else if (porcentagem == 0){
+                Console.WriteLine("Isento");
+            }
         }
     }
 }
